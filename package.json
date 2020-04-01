@@ -30,12 +30,16 @@
     "webpack-merge": "^4.2.2"
   },
   "scripts": {
-    "start": "node ./scripts/start.js",
+    "dev": "cross-env proxy=true port=3001 proxyUrl=http://localhost:4000 webpack-dev-server --hot --color --config config/webpack.dev.js --open",
+    "mock": "cross-env proxy=false port=3001 webpack-dev-server --hot --color --config config/webpack.dev.js --open",
     "build": "node ./scripts/build.js"
   },
   "dependencies": {
+    "axios": "^0.19.2",
+    "cross-env": "^7.0.2",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react-dom": "^16.12.0",
+    "webpack-api-mocker": "^1.7.6"
   },
   "browserslist": [
     "defaults",
