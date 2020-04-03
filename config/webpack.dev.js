@@ -6,6 +6,7 @@ const apiMocker = require('webpack-api-mocker')
 const port = process.env.port
 
 const config = {
+    devtool: 'cheap-module-eval-source-map',
     devServer: {
         contentBase: path.join(__dirname, "../dist"),
         hot: true,
