@@ -9,7 +9,7 @@ function webpackCommonConfigCreator(options) {
     entry: ['@babel/polyfill', './src/index.js'],
     output: {
       filename: 'js/bundle.js',
-      path: path.resolve(__dirname, '../build')
+      path: path.resolve(__dirname, '../build'),
     },
     module: {
       rules: [
@@ -21,10 +21,15 @@ function webpackCommonConfigCreator(options) {
               loader: 'babel-loader',
               options: {
                 presets: ['@babel/preset-env', '@babel/preset-react'],
-                plugins: ['@babel/plugin-transform-runtime']
-              }
-            }
-          ]
+                plugins: ['@babel/plugin-transform-runtime'],
+              },
+            },
+          ],
+        },
+        {
+          test: /\.tsx?$/,
+          include: path.resolve(__dirname, '../src'),
+          loaders: ['babel-loader', 'ts-loader'],
         },
         {
           test: /\.(css|scss)$/,
@@ -37,30 +42,30 @@ function webpackCommonConfigCreator(options) {
                 options: {
                   modules: {
                     mode: 'local',
-                    localIdentName: '[path][name]_[local]--[hash:base64:5]'
+                    localIdentName: '[path][name]_[local]--[hash:base64:5]',
                   },
-                  localsConvention: 'camelCase'
-                }
+                  localsConvention: 'camelCase',
+                },
               },
               'sass-loader',
               {
                 loader: 'postcss-loader',
                 options: {
                   ident: 'postcss',
-                  plugins: loader => [
+                  plugins: (loader) => [
                     require('postcss-import')({
-                      root: loader.resourcePath
+                      root: loader.resourcePath,
                     }),
-                    require('autoprefixer')()
-                  ]
-                }
-              }
-            ]
-          })
+                    require('autoprefixer')(),
+                  ],
+                },
+              },
+            ],
+          }),
         },
         {
           test: /\.(woff|woff2|eot|ttf|otf)$/,
-          use: ['file-loader']
+          use: ['file-loader'],
         },
         {
           test: /\.(jpg|png|svg|gif)$/,
@@ -69,27 +74,27 @@ function webpackCommonConfigCreator(options) {
               loader: 'url-loader',
               options: {
                 limit: 10240,
-                name: 'images/[hash].[ext]'
-              }
-            }
-          ]
-        }
-      ]
+                name: 'images/[hash].[ext]',
+              },
+            },
+          ],
+        },
+      ],
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: path.resolve(__dirname, '../public/index.html')
+        template: path.resolve(__dirname, '../public/index.html'),
       }),
       new CleanWebpackPlugin({
         cleanOnceBeforeBuildPatterns: [
           path.resolve(process.cwd(), 'build/'),
-          path.resolve(process.cwd(), 'dist/')
-        ]
+          path.resolve(process.cwd(), 'dist/'),
+        ],
       }),
       new ExtractTextPlugin({
-        filename: 'css/[name][hash].css'
-      })
-    ]
+        filename: 'css/[name][hash].css',
+      }),
+    ],
   }
 }
 
